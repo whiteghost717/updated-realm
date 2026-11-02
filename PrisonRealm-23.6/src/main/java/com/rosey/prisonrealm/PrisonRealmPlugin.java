@@ -491,7 +491,7 @@ public final class PrisonRealmPlugin extends JavaPlugin implements Listener, Com
                 double a = i*Math.PI/2.0;
                 Location pillar = s.station.clone().add(.5+Math.cos(a)*3.0, 2.5, .5+Math.sin(a)*3.0);
                 p.getWorld().spawnParticle(Particle.END_ROD, pillar, 5, .15,.2,.15, .01);
-                BlockData chainData = Material.CHAIN.createBlockData();
+                BlockData chainData = Bukkit.createBlockData("minecraft:chain");
                 for (double t=0.2;t<1.0;t+=.2) {
                     Location chain = center.clone().add((pillar.getX()-center.getX())*t, (pillar.getY()-center.getY())*t, (pillar.getZ()-center.getZ())*t);
                     p.getWorld().spawnParticle(Particle.BLOCK, chain, 2, .05,.05,.05, 0, chainData);
