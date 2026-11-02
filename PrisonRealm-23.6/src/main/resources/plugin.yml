@@ -1,0 +1,25 @@
+name: PrisonRealm
+version: 23.6
+main: com.rosey.prisonrealm.PrisonRealmPlugin
+api-version: '26.3'
+description: Two-stage Prison Realm capture and release system.
+commands:
+  prisonrealm:
+    description: Prison Realm administration.
+    usage: /prisonrealm
+    permission: prisonrealm.admin
+  summon:
+    description: Summon your sealed prisoner to the placed Prison Realm.
+    usage: /summon <player>
+    permission: prisonrealm.use
+  unseal:
+    description: Release your summoned prisoner.
+    usage: /unseal <player>
+    permission: prisonrealm.use
+permissions:
+  prisonrealm.use:
+    description: Allows using Prison Realm.
+    default: true
+  prisonrealm.admin:
+    description: Allows Prison Realm administration.
+    default: op

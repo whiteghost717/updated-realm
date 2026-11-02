@@ -1,0 +1,9 @@
+item:
+  name: "&5&lPrison Realm"
+  lore:
+    - "&7A sealed dimension in a block."
+    - "&dPlace near a target to begin capture."
+  custom-model-data: 26001
+  glow: true
+prison:
+  escape-radius: 24.0
