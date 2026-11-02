@@ -1,29 +1,44 @@
-name: Build PrisonRealm 23.6
+```yaml
+name: Build Prison Realm
 
 on:
   push:
     branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Java 25
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Find Gradle project
+        run: |
+          BUILD_FILE=$(find . -type f \( -name build.gradle -o -name build.gradle.kts \) | head -n 1)
+          if [ -z "$BUILD_FILE" ]; then
+            echo "ERROR: No Gradle build file found!"
+            echo "Make sure build.gradle and settings.gradle are committed."
+            exit 1
+          fi
+          PROJECT_DIR=$(dirname "$BUILD_FILE")
+          echo "Building from: $PROJECT_DIR"
+          echo "PROJECT_DIR=$PROJECT_DIR" >> "$GITHUB_ENV"
+
       - name: Build plugin
-        run: gradle build --no-daemon
+        run: gradle -p "$PROJECT_DIR" build --no-daemon
+
       - name: Upload plugin JAR
         uses: actions/upload-artifact@v4
         with:
-          name: PrisonRealm-23.6
-          path: build/libs/*.jar
-          if-no-files-found: error
+          name: PrisonRealm
+          path: '**/build/libs/*.jar'
